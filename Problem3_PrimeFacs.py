@@ -3,29 +3,33 @@ import math
 def find_max_prime_fac(n):
     # for each factor up to sqrt n see if divides
     # but only check primes (skip if alr in checked)
-
-    def sieve_of_erasthones(little_n):
-        possible = [i for i in range(2, little_n + 2)]
-
-
-        ind = 0
-        while ind < len(possible):
-            val = possible[ind]
-
-            for j in range(ind + 1, len(possible)):
-                if possible[j] % val == 0:
-                    possible.pop(j)
-
-
-            ind += 1
-
-        return possible
     
-    # iterate through sieve searching for maximum that is a factor
-    # binary search for sqrt, then deccrease until you hit something 
-    
-    return sieve_of_erasthones(n)
+    # start by dividing by 2 until cant anymore
+
+    # then divide by odds up to sqrt n
+
+    # if anything left then thats highest, else its last
+
+    largest = None
+
+    while n % 2 == 0:
+        largest = 2
+        n = n//2
+
+    div = 3
+    while div ** 2 < n:
+        while n % div == 0:
+            largest = div
+            n = n//div
+
+        div += 2
+
+    if n > 1:
+        largest = n
+
+    return largest
+
 
 
 if __name__ == "__main__":
-    print(find_max_prime_fac(3))
+    print(find_max_prime_fac(600851475143))
